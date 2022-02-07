@@ -19,8 +19,8 @@ const param = {
     importetotal: 100,
     importesubtotal: 100,
     importeiva: 0,
-    fechaemision: "2022-01-31",
-    fechavencimiento: "2022-01-31",
+    fechaemision: "2022-02-07",
+    fechavencimiento: "2023-01-31",
     numeroreferencia: "",
     numeroreferenciaorigen: "11111"
   },
