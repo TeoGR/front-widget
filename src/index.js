@@ -4,8 +4,6 @@ import Pasarela from './Pasarela';
 
 const aaaaa = document.getElementById("widgetPasarela");
 
-const func_acceso = () => { };
-debugger
 const param = {
   titulo: "Continuar a la pasarela",
   tipo_boton: 1,
@@ -26,8 +24,8 @@ const param = {
     numeroreferencia: "ZIJ300",
     numeroreferenciaorigen: "11111"
   },
-  func_pro: func_acceso
 };
+
 ReactDOM.render(
   <React.StrictMode>
     <Pasarela param={param}

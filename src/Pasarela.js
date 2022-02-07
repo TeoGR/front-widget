@@ -24,7 +24,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Swal from 'sweetalert2'
 
 import { io } from "socket.io-client";
-const ENDPOINT = "https://server-node-widget.herokuapp.com";
+const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com";
 
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
@@ -38,13 +38,27 @@ export default function Pasarela(param) {
     const [autent, setAutent] = React.useState("");
     const [response, setResponse] = React.useState("");
 
+    //leemos y asignamos las variables
+    console.log('esto recibio el widget', param);
+    console.log('esto recibio el widget', param.param);
+    var dataPago;
+
+    var data = param.param !== undefined ? param.param : param;
+    console.log('data limpio:', data);
+
+    if (data.data_pago) {
+        dataPago = eval(data.data_pago);
+    }
+    console.log('dataPago: ', dataPago);
+
+    //#region configuracion del socket
     const [rtaAPI, setRtaAPI] = useState({});
     const [flagCanal, setFlagCanal] = useState(false);
     let socket;
 
     useEffect(() => {
         socket = io(ENDPOINT, { transports: ['websocket'] })
-        socket.on(9, msj => {
+        socket.on(dataPago.numeroreferencia, msj => {
             console.log('esto llego ', msj)
             setRtaAPI(msj)
         })
@@ -82,18 +96,9 @@ export default function Pasarela(param) {
             }
         }
     }, [rtaAPI])
+    //#endregion configuracion del socket
 
-    console.log('esto recibio el widget', param);
-    console.log('esto recibio el widget', param.param);
-    var dataPago;
 
-    var data = param.param !== undefined ? param.param : param;
-    console.log('data limpio:', data);
-
-    if (data.data_pago) {
-        dataPago = eval(data.data_pago);
-    }
-    console.log('dataPago: ', dataPago);
 
     let param_titulo = data.titulo;
     let param_configura = data.configura;
@@ -224,31 +229,24 @@ export default function Pasarela(param) {
     }
 
     const conmutador = () => {
-        if (open1 === 0) {
-            return (0)
-        } else {
-            if (este_dispositivo)
-                return (4)
-            else
-                return open1
-        }
+        return (0)
+        // if (open1 === 0) {
+        //     return (0)
+        // } else {
+        //     if (este_dispositivo)
+        //         return (4)
+        //     else
+        //         return open1
+        // }
     }
 
     const Accion_boton = (record) => {
         switch (record.xx2) {
             case "imagenes":
-                //setEste_dispositivo(true)		  
                 return <Button variant="contained" color="primary" onClick={() => { setFlagCanal(true); setEste_dispositivo(true); /*setOpen1(4);*/ }} fullWidth>
                     Pagar
                 </Button>;
-            case "foto":
-                //setEste_dispositivo(true)
-                return <Button variant="contained" color="primary" onClick={() => { setEste_dispositivo(true); /*setOpen1(4)*/ }} fullWidth>
-                    Pagar
-                </Button>;
-
             default:
-                //setEste_dispositivo(false)
                 return <div />;
         }
     };
