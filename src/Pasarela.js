@@ -54,10 +54,10 @@ export default function Pasarela(param) {
     //#region configuracion del socket
     const [rtaAPI, setRtaAPI] = useState({});
     const [flagCanal, setFlagCanal] = useState(false);
-    let socket;
 
     useEffect(() => {
-        socket = io(ENDPOINT, { transports: ['websocket'] })
+        console.log('numero ref: ', dataPago.numeroreferencia)
+        const socket = io(ENDPOINT, { transports: ['websocket'] })
         socket.on(dataPago.numeroreferencia, msj => {
             console.log('esto llego ', msj)
             setRtaAPI(msj)
@@ -97,8 +97,6 @@ export default function Pasarela(param) {
         }
     }, [rtaAPI])
     //#endregion configuracion del socket
-
-
 
     let param_titulo = data.titulo;
     let param_configura = data.configura;
@@ -189,6 +187,10 @@ export default function Pasarela(param) {
                     </Typography>
                     <Typography align='left' color="textSecondary" gutterBottom>
                         <br />
+                        <b>referencia:</b> {record.record.numeroReferencia}
+                    </Typography>
+                    <Typography align='left' color="textSecondary" gutterBottom>
+                        <br />
                         <b>Email:</b> {record.record.emailComprador}
                     </Typography>
                     <Typography align='left' color="textSecondary" gutterBottom>
@@ -251,11 +253,16 @@ export default function Pasarela(param) {
         }
     };
 
+    function name(e) {
+        dataPago.numeroreferencia = e.target.value;
+    }
+
     switch (conmutador()) {
         case 0:
             console.log('entro al switch 0')
             return (
                 <div>
+                    <input type="text" onChange={(e) => name(e)} />
                     <Boton1 />
                     {rtaAPI.message}
                     <Dialog open={open} disableBackdropClick onClose={handleClose} aria-labelledby="form-dialog-title"  >
@@ -272,6 +279,7 @@ export default function Pasarela(param) {
                                 nombreComprador: dataPago.nombre,
                                 emailComprador: dataPago.correo,
                                 importeTotal: dataPago.importetotal,
+                                numeroReferencia: dataPago.numeroreferencia,
                                 campo: "imagenes",
                                 qr: false
                             }} />

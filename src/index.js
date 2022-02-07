@@ -28,6 +28,7 @@ const param = {
 
 ReactDOM.render(
   <React.StrictMode>
+
     <Pasarela param={param}
     // data_empresa={aaaaa.getAttribute('data_empresa')}
     // data_token={aaaaa.getAttribute('data_token')}
