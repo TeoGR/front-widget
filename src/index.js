@@ -21,7 +21,7 @@ const param = {
     importeiva: 0,
     fechaemision: "2022-01-31",
     fechavencimiento: "2022-01-31",
-    numeroreferencia: "ZIJ300",
+    numeroreferencia: "",
     numeroreferenciaorigen: "11111"
   },
 };

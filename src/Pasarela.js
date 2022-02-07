@@ -55,21 +55,27 @@ export default function Pasarela(param) {
     const [rtaAPI, setRtaAPI] = useState({});
     const [flagCanal, setFlagCanal] = useState(false);
 
+    console.log('1obj:', rtaAPI);
     useEffect(() => {
-        console.log('numero ref: ', dataPago.numeroreferencia)
-        const socket = io(ENDPOINT, { transports: ['websocket'] })
-        socket.on(dataPago.numeroreferencia, msj => {
-            console.log('esto llego ', msj)
-            setRtaAPI(msj)
-        })
+        console.log('2obj:', rtaAPI);
 
-        setFlagCanal(false)
-        return () => {
-            socket.off();
+        console.log('numero ref: ', dataPago.numeroreferencia)
+        if (Object.keys(rtaAPI).length === 0) {
+            const socket = io(ENDPOINT, { transports: ['websocket'] })
+            socket.on(dataPago.numeroreferencia, msj => {
+                console.log('esto llego ', msj)
+                setRtaAPI(msj)
+            })
+
+            setFlagCanal(false)
+            return () => {
+                socket.off();
+            }
         }
     }, [ENDPOINT, flagCanal])
 
     useEffect(() => {
+        console.log('3obj:', rtaAPI);
         if (Object.keys(rtaAPI).length > 0) {
             console.log('obj: ', Object.keys(rtaAPI))
             setRtaAPI({})
@@ -262,6 +268,7 @@ export default function Pasarela(param) {
             console.log('entro al switch 0')
             return (
                 <div>
+                    <label>Numero referencia</label>
                     <input type="text" onChange={(e) => name(e)} />
                     <Boton1 />
                     {rtaAPI.message}
