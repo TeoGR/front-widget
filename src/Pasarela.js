@@ -225,9 +225,9 @@ export default function Pasarela(param) {
         </IconButton>
     </Tooltip>;
 
-    React.useEffect(() => {
-        inicio_session(este_dispositivo)
-    }, [este_dispositivo]);
+    // React.useEffect(() => {
+    //     inicio_session(este_dispositivo)
+    // }, [este_dispositivo]);
 
     const Boton1 = () => {
         if (data.tipo_boton === 1)
@@ -251,7 +251,7 @@ export default function Pasarela(param) {
     const Accion_boton = (record) => {
         switch (record.xx2) {
             case "imagenes":
-                return <Button variant="contained" color="primary" onClick={() => { setFlagCanal(true); setEste_dispositivo(true); /*setOpen1(4);*/ }} fullWidth>
+                return <Button variant="contained" color="primary" onClick={() => { inicio_session(true); setFlagCanal(true); setEste_dispositivo(true); /*setOpen1(4);*/ }} fullWidth>
                     Pagar
                 </Button>;
             default:
