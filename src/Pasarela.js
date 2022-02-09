@@ -237,15 +237,15 @@ export default function Pasarela(param) {
     }
 
     const conmutador = () => {
-        return (0)
-        // if (open1 === 0) {
-        //     return (0)
-        // } else {
-        //     if (este_dispositivo)
-        //         return (4)
-        //     else
-        //         return open1
-        // }
+        //return (0)
+        if (open1 === 0) {
+            return (0)
+        } else {
+            if (este_dispositivo)
+                return (4)
+            else
+                return open1
+        }
     }
 
     const Accion_boton = (record) => {
@@ -405,7 +405,7 @@ export default function Pasarela(param) {
             return (
                 <div>
                     <Boton1 />
-                    <Dialog open={open} disableBackdropClick onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
+                    <Dialog open={open1} disableBackdropClick onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
                         <DialogTitle id="form-dialog-title">Pasarela de pago</DialogTitle>
                         <DialogContent>
                             <Iframe url={xqr1}
@@ -426,4 +426,6 @@ export default function Pasarela(param) {
         default:
             return <div />;
     }
+
+
 }
