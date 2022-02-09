@@ -164,7 +164,7 @@ export default function Pasarela(param) {
                 console.log(refer);
                 if (refer.Link !== '') {
                     setXqr1(refer.Link);
-                    //setOpen1(4)
+                    setOpen1(4)
                 }
             })
             .catch(error => console.log('error', error));
