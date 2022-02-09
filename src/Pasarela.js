@@ -261,6 +261,7 @@ export default function Pasarela(param) {
 
     function name(e) {
         dataPago.numeroreferencia = e.target.value;
+        dataPago.numeroreferenciaorigen = e.target.value;
     }
 
     switch (conmutador()) {
