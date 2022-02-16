@@ -56,25 +56,28 @@ export default function Pasarela(param) {
         console.log('numero ref: ', dataPago.numeroreferencia)
         if (Object.keys(rtaAPI).length === 0) {
             console.log('abri canal')
+            let dataresponse = null;
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
-
+                dataresponse = msj;
                 setOpen(false)
                 setOpen1(false)
                 handleClose()
             })
 
-            return () => {
+            if (dataresponse !== null)
                 crack(rtaAPI)
+
+            return () => {
                 socket.off();
             }
         }
     })
 
     function crack(data) {
-        console.log('Ejecuto crack:', data, Object.keys(data).length);
+        console.log('Ejecuto crack:', data, Object.keys(data).length, rtaAPI);
         console.log('3obj:', data);
         console.log('open: ', open, 'open1: ', open1)
         if (Object.keys(data).length > 0) {
