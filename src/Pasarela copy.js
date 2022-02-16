@@ -74,6 +74,7 @@ export default function Pasarela(param) {
     })
 
     function crack(data) {
+        console.log('Ejecuto crack:', data, Object.keys(data).length);
         console.log('3obj:', data);
         console.log('open: ', open, 'open1: ', open1)
         if (Object.keys(data).length > 0) {
