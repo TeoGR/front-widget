@@ -60,13 +60,14 @@ export default function Pasarela(param) {
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
-                crack(msj)
+
                 setOpen(false)
                 setOpen1(false)
                 handleClose()
             })
 
             return () => {
+                crack(rtaAPI)
                 socket.off();
             }
         }
