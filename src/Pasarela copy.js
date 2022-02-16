@@ -61,6 +61,7 @@ export default function Pasarela(param) {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
                 crack(msj)
+                setOpen(false)
                 setOpen1(false)
                 handleClose()
             })
@@ -73,8 +74,11 @@ export default function Pasarela(param) {
 
     function crack(data) {
         console.log('3obj:', data);
+        console.log('open: ', open, 'open1: ', open1)
         if (Object.keys(data).length > 0) {
             console.log('obj: ', Object.keys(data))
+            console.log('dentro- open: ', open, 'open1: ', open1)
+
             setOpen(false)
             setOpen1(false)
             if (data.message === 'Multicash procesado') {
