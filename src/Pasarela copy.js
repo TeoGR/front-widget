@@ -65,36 +65,44 @@ export default function Pasarela(param) {
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
-
-                if (msj.message === 'Multicash procesado') {
-                    Swal.fire({
-                        title: "Pago realizado",
-                        text: "El multicash se proceso con exito",
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#5CB85C',
-                        reverseButtons: true
-                    })
-                } else {
-                    Swal.fire({
-                        title: "Error",
-                        text: "Error al procesar el pago",
-                        icon: 'error',
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#D33',
-                        reverseButtons: true
-                    })
-                }
-
+                crack(msj)
                 setOpen1(false)
             })
 
-            // setFlagCanal(false)
-            // return () => {
-            //     socket.off();
-            // }
+            setFlagCanal(false)
+            return () => {
+                socket.off();
+            }
         }
     }, [] /*, [ENDPOINT, flagCanal]*/)
+
+    function crack(data) {
+        console.log('3obj:', data);
+        if (Object.keys(data).length > 0) {
+            console.log('obj: ', Object.keys(data))
+            setOpen(false)
+            setOpen1(false)
+            if (data.message === 'Multicash procesado') {
+                Swal.fire({
+                    title: "Pago realizado",
+                    text: "El multicash se proceso con exito",
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#5CB85C',
+                    reverseButtons: true
+                })
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "Error al procesar el pago",
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#D33',
+                    reverseButtons: true
+                })
+            }
+        }
+    }
 
     // useEffect(() => {
     //     console.log('3obj:', rtaAPI);
@@ -103,7 +111,25 @@ export default function Pasarela(param) {
     //         setRtaAPI({})
     //         setOpen(false)
     //         setOpen1(false)
-
+    //         if (rtaAPI.message === 'Multicash procesado') {
+    //             Swal.fire({
+    //                 title: "Pago realizado",
+    //                 text: "El multicash se proceso con exito",
+    //                 icon: 'success',
+    //                 confirmButtonText: 'Aceptar',
+    //                 confirmButtonColor: '#5CB85C',
+    //                 reverseButtons: true
+    //             })
+    //         } else {
+    //             Swal.fire({
+    //                 title: "Error",
+    //                 text: "Error al procesar el pago",
+    //                 icon: 'error',
+    //                 confirmButtonText: 'Aceptar',
+    //                 confirmButtonColor: '#D33',
+    //                 reverseButtons: true
+    //             })
+    //         }
     //     }
     // }, [rtaAPI])
     //#endregion configuracion del socket
