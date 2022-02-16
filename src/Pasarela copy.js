@@ -70,13 +70,13 @@ export default function Pasarela(param) {
             console.log('antes del if: ', dataresponse)
             if (dataresponse !== null) {
                 console.log('entre al if: ', dataresponse)
-                crack(rtaAPI)
             }
             return () => {
                 socket.off();
             }
         }
     })
+    crack(rtaAPI)
 
     function crack(data) {
         console.log('Ejecuto crack:', data, Object.keys(data).length, rtaAPI);
