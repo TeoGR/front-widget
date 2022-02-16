@@ -29,14 +29,9 @@ const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com"
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
     const [open1, setOpen1] = React.useState(false);
-    const [tmensaje, setTmensaje] = React.useState("");
-    const [tmensaje_ok, setTmensaje_ok] = React.useState({});
     const [este_dispositivo, setEste_dispositivo] = React.useState();
 
     const [xqr1, setXqr1] = React.useState("");
-    const [foto, setFoto] = React.useState("");
-    const [autent, setAutent] = React.useState("");
-    const [response, setResponse] = React.useState("");
 
     //leemos y asignamos las variables
     console.log('esto recibio el widget', param);
@@ -53,7 +48,6 @@ export default function Pasarela(param) {
 
     //#region configuracion del socket
     const [rtaAPI, setRtaAPI] = useState({});
-    const [flagCanal, setFlagCanal] = useState(false);
 
     console.log('1obj:', rtaAPI);
     useEffect(() => {
@@ -65,16 +59,16 @@ export default function Pasarela(param) {
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
-                crack(msj)
+                setRtaAPI(msj)
+                crack(rtaAPI)
                 setOpen1(false)
             })
 
-            setFlagCanal(false)
             return () => {
                 socket.off();
             }
         }
-    }, [] /*, [ENDPOINT, flagCanal]*/)
+    })
 
     function crack(data) {
         console.log('3obj:', data);
@@ -265,7 +259,7 @@ export default function Pasarela(param) {
     const Accion_boton = (record) => {
         switch (record.xx2) {
             case "imagenes":
-                return <Button variant="contained" color="primary" onClick={() => { inicio_session(true); setFlagCanal(true); setEste_dispositivo(true); /*setOpen1(4);*/ }} fullWidth>
+                return <Button variant="contained" color="primary" onClick={() => { inicio_session(true); setEste_dispositivo(true); }} fullWidth>
                     Pagar
                 </Button>;
             default:
