@@ -65,6 +65,7 @@ export default function Pasarela(param) {
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
+                setOpen1(0)
             })
 
             setFlagCanal(false)
@@ -174,10 +175,6 @@ export default function Pasarela(param) {
     const handleClose = () => {
         setOpen(false);
         setOpen1(0)
-
-        // channel.unbind_all();
-        // //channel.unsubscribe();
-        // pusher.disconnect();
     };
 
     const Carta = (record) => {
