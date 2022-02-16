@@ -62,6 +62,7 @@ export default function Pasarela(param) {
                 setRtaAPI(msj)
                 crack(msj)
                 setOpen1(false)
+                handleClose()
             })
 
             return () => {
