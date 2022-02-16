@@ -56,30 +56,48 @@ export default function Pasarela(param) {
         console.log('numero ref: ', dataPago.numeroreferencia)
         if (Object.keys(rtaAPI).length === 0) {
             console.log('abri canal')
-            let dataresponse = null;
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
-                dataresponse = msj;
+                if (Object.keys(msj).length > 0) {
+                    console.log('obj: ', Object.keys(msj))
+                    console.log('dentro- open: ', open, 'open1: ', open1)
+
+                    setOpen(false)
+                    setOpen1(false)
+                    if (msj.message === 'Multicash procesado') {
+                        Swal.fire({
+                            title: "Pago realizado",
+                            text: "El multicash se proceso con exito",
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#5CB85C',
+                            reverseButtons: true
+                        })
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Error al procesar el pago",
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#D33',
+                            reverseButtons: true
+                        })
+                    }
+                }
                 setOpen(false)
                 setOpen1(false)
                 handleClose()
             })
 
-            console.log('antes del if: ', dataresponse)
-            if (dataresponse !== null) {
-                console.log('entre al if: ', dataresponse)
-            }
             return () => {
                 socket.off();
             }
         }
     })
-    crack(rtaAPI)
 
     function crack(data) {
-        console.log('Ejecuto crack:', data, Object.keys(data).length, rtaAPI);
         console.log('3obj:', data);
         console.log('open: ', open, 'open1: ', open1)
         if (Object.keys(data).length > 0) {
