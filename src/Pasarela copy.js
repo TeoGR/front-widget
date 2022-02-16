@@ -61,6 +61,7 @@ export default function Pasarela(param) {
 
         console.log('numero ref: ', dataPago.numeroreferencia)
         if (Object.keys(rtaAPI).length === 0) {
+            console.log('abri canal')
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
@@ -73,7 +74,7 @@ export default function Pasarela(param) {
                 socket.off();
             }
         }
-    }, [ENDPOINT, flagCanal])
+    } /*, [ENDPOINT, flagCanal]*/)
 
     useEffect(() => {
         console.log('3obj:', rtaAPI);
