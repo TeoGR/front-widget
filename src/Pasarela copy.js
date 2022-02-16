@@ -65,7 +65,27 @@ export default function Pasarela(param) {
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
-                setRtaAPI(msj)
+
+                if (msj.message === 'Multicash procesado') {
+                    Swal.fire({
+                        title: "Pago realizado",
+                        text: "El multicash se proceso con exito",
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#5CB85C',
+                        reverseButtons: true
+                    })
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Error al procesar el pago",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#D33',
+                        reverseButtons: true
+                    })
+                }
+
                 setOpen1(false)
             })
 
@@ -74,36 +94,18 @@ export default function Pasarela(param) {
                 socket.off();
             }
         }
-    } /*, [ENDPOINT, flagCanal]*/)
+    }, [] /*, [ENDPOINT, flagCanal]*/)
 
-    useEffect(() => {
-        console.log('3obj:', rtaAPI);
-        if (Object.keys(rtaAPI).length > 0) {
-            console.log('obj: ', Object.keys(rtaAPI))
-            setRtaAPI({})
-            setOpen(false)
-            setOpen1(false)
-            if (rtaAPI.message === 'Multicash procesado') {
-                Swal.fire({
-                    title: "Pago realizado",
-                    text: "El multicash se proceso con exito",
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#5CB85C',
-                    reverseButtons: true
-                })
-            } else {
-                Swal.fire({
-                    title: "Error",
-                    text: "Error al procesar el pago",
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#D33',
-                    reverseButtons: true
-                })
-            }
-        }
-    }, [rtaAPI])
+    // useEffect(() => {
+    //     console.log('3obj:', rtaAPI);
+    //     if (Object.keys(rtaAPI).length > 0) {
+    //         console.log('obj: ', Object.keys(rtaAPI))
+    //         setRtaAPI({})
+    //         setOpen(false)
+    //         setOpen1(false)
+
+    //     }
+    // }, [rtaAPI])
     //#endregion configuracion del socket
 
     let param_titulo = data.titulo;
