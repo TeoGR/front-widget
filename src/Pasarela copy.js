@@ -89,10 +89,10 @@ export default function Pasarela(param) {
                 setOpen1(false)
             })
 
-            setFlagCanal(false)
-            return () => {
-                socket.off();
-            }
+            // setFlagCanal(false)
+            // return () => {
+            //     socket.off();
+            // }
         }
     }, [] /*, [ENDPOINT, flagCanal]*/)
 
