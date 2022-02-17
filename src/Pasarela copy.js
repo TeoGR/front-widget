@@ -49,13 +49,13 @@ export default function Pasarela(param) {
     const [rtaAPI, setRtaAPI] = useState({});
 
     console.log('1obj:', rtaAPI);
+    const socket = io(ENDPOINT, { transports: ['websocket'] })
     useEffect(() => {
         console.log('2obj:', rtaAPI);
 
         console.log('numero ref: ', dataPago.numeroreferencia)
         if (Object.keys(rtaAPI).length === 0) {
             console.log('abri canal')
-            const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
