@@ -65,25 +65,25 @@ export default function Pasarela(param) {
                     console.log('dentro- open: ', open)
                     setOpen(false)
                     handleClose()
-                    if (msj.message === 'Multicash procesado') {
-                        Swal.fire({
-                            title: "Pago realizado",
-                            text: "El multicash se proceso con exito",
-                            icon: 'success',
-                            confirmButtonText: 'Aceptar',
-                            confirmButtonColor: '#5CB85C',
-                            reverseButtons: true
-                        })
-                    } else {
-                        Swal.fire({
-                            title: "Error",
-                            text: "Error al procesar el pago",
-                            icon: 'error',
-                            confirmButtonText: 'Aceptar',
-                            confirmButtonColor: '#D33',
-                            reverseButtons: true
-                        })
-                    }
+                    // if (msj.message === 'Multicash procesado') {
+                    //     Swal.fire({
+                    //         title: "Pago realizado",
+                    //         text: "El multicash se proceso con exito",
+                    //         icon: 'success',
+                    //         confirmButtonText: 'Aceptar',
+                    //         confirmButtonColor: '#5CB85C',
+                    //         reverseButtons: true
+                    //     })
+                    // } else {
+                    //     Swal.fire({
+                    //         title: "Error",
+                    //         text: "Error al procesar el pago",
+                    //         icon: 'error',
+                    //         confirmButtonText: 'Aceptar',
+                    //         confirmButtonColor: '#D33',
+                    //         reverseButtons: true
+                    //     })
+                    // }
                 }
                 setOpen(false)
                 handleClose()
@@ -94,9 +94,9 @@ export default function Pasarela(param) {
                 setOpen(false)
                 handleClose()
             })
-            socket.off();
+            //socket.off();
         }
-    }, 10000);
+    }, 30000);
 
 
     // useEffect(() => {
