@@ -69,6 +69,7 @@ export default function Pasarela(param) {
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
                         setRtaAPI(2)
+                        setOpenFinal(true)
                         socket.off()
                         clearInterval(asd)
                         // Swal.fire({
@@ -411,7 +412,7 @@ export default function Pasarela(param) {
             </Dialog>
             {
                 rtaAPI === 2 ?
-                    <Dialog open={true} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
+                    <Dialog open={openFinal} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
 
                         <DialogContent>
                             <DialogContentText align='center'>
