@@ -307,7 +307,7 @@ export default function Pasarela(param) {
             <Boton1 />
             {rtaAPI.message}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
-                {xqr1 === "" ?
+                {xqr1 === "" && Object.keys(rtaAPI).length === 0 ?
                     <DialogContent>
                         <DialogContentText align='center'>
                             <Typography variant="h5" component="h2">
@@ -326,15 +326,19 @@ export default function Pasarela(param) {
                             qr: false
                         }} />
                     </DialogContent>
-                    :
-                    <DialogContent>
-                        <Iframe url={xqr1}
-                            width="100%"
-                            height="550px"
-                            id="myId"
-                            styles={{ background: "#856767", border: "none" }}
-                            position="relative" />
-                    </DialogContent>
+                    : xqr1 !== "" && Object.keys(rtaAPI).length === 0 ?
+                        <DialogContent>
+                            <Iframe url={xqr1}
+                                width="100%"
+                                height="550px"
+                                id="myId"
+                                styles={{ background: "#856767", border: "none" }}
+                                position="relative" />
+                        </DialogContent>
+                        :
+                        <DialogContent>
+                            <p>pago exitoso</p>
+                        </DialogContent>
                 }
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
