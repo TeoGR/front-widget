@@ -52,9 +52,9 @@ export default function Pasarela(param) {
 
     setInterval(() => {
         console.log('entro al timeout')
-        const socket = io(ENDPOINT, { transports: ['websocket'] })
         if (Object.keys(rtaAPI).length === 0) {
             console.log('abri canal')
+            const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
@@ -94,8 +94,8 @@ export default function Pasarela(param) {
                 setOpen(false)
                 handleClose()
             })
+            socket.off();
         }
-        socket.off();
     }, 10000);
 
 
