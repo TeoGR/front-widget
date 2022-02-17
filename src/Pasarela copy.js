@@ -26,11 +26,9 @@ import Swal from 'sweetalert2'
 import { io } from "socket.io-client";
 const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com";
 
-let open = false;
-let open1 = false;
 export default function Pasarela(param) {
-    // const [open, setOpen] = React.useState(false);
-    // const [open1, setOpen1] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [open1, setOpen1] = React.useState(false);
     const [este_dispositivo, setEste_dispositivo] = React.useState();
 
     const [xqr1, setXqr1] = React.useState("");
@@ -66,10 +64,8 @@ export default function Pasarela(param) {
                     console.log('obj: ', Object.keys(msj))
                     console.log('dentro- open: ', open, 'open1: ', open1)
 
-                    // setOpen(false)
-                    // setOpen1(false)
-                    open = false
-                    open1 = false
+                    setOpen(false)
+                    setOpen1(false)
                     if (msj.message === 'Multicash procesado') {
                         Swal.fire({
                             title: "Pago realizado",
@@ -90,10 +86,8 @@ export default function Pasarela(param) {
                         })
                     }
                 }
-                // setOpen(false)
-                // setOpen1(false)
-                open = false
-                open1 = false
+                setOpen(false)
+                setOpen1(false)
                 handleClose()
             })
 
@@ -110,8 +104,8 @@ export default function Pasarela(param) {
             console.log('obj: ', Object.keys(data))
             console.log('dentro- open: ', open, 'open1: ', open1)
 
-            // setOpen(false)
-            // setOpen1(false)
+            setOpen(false)
+            setOpen1(false)
             if (data.message === 'Multicash procesado') {
                 Swal.fire({
                     title: "Pago realizado",
@@ -188,8 +182,7 @@ export default function Pasarela(param) {
     }
 
     const handleClickOpen = () => {
-        //setOpen(true);
-        open = true
+        setOpen(true);
     }
 
     const inicio_session = (si_iframe) => {
@@ -225,8 +218,7 @@ export default function Pasarela(param) {
                 console.log(refer);
                 if (refer.Link !== '') {
                     setXqr1(refer.Link);
-                    // setOpen1(true)
-                    open1 = false
+                    setOpen1(true)
                 }
             })
             .catch(error => console.log('error', error));
@@ -234,10 +226,8 @@ export default function Pasarela(param) {
     };
 
     const handleClose = () => {
-        // setOpen(false);
-        // setOpen1(false);
-        open = false
-        open1 = false
+        setOpen(false);
+        setOpen1(false)
     };
 
     const Carta = (record) => {
@@ -319,7 +309,7 @@ export default function Pasarela(param) {
             <input type="text" onChange={(e) => name(e)} />
             <Boton1 />
             {rtaAPI.message}
-            <Dialog open={open} disableBackdropClick onClose={handleClose} aria-labelledby="form-dialog-title"  >
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title"  >
                 <DialogContent>
                     <DialogContentText align='center'>
                         <Typography variant="h5" component="h2">
@@ -345,7 +335,7 @@ export default function Pasarela(param) {
                 </DialogActions>
             </Dialog>
 
-            <Dialog open={open1} disableBackdropClick onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
+            <Dialog open={open1} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
                 <DialogTitle id="form-dialog-title">Pasarela de pago</DialogTitle>
                 <DialogContent>
                     <Iframe url={xqr1}
