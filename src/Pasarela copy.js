@@ -46,18 +46,18 @@ export default function Pasarela(param) {
     console.log('dataPago: ', dataPago);
 
     //#region configuracion del socket
-    const [rtaAPI, setRtaAPI] = useState(false);
+    const [rtaAPI, setRtaAPI] = useState(0);
 
     console.log('1obj:', rtaAPI);
 
     setInterval(() => {
         console.log('entro al timeout')
-        if (!rtaAPI) {
+        if (rtaAPI === 0) {
             console.log('abri canal')
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
-                setRtaAPI(true)
+                setRtaAPI(1)
                 setOpen(false)
                 handleClose()
                 if (Object.keys(msj).length > 0) {
@@ -67,6 +67,7 @@ export default function Pasarela(param) {
                     handleClose()
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
+                        setRtaAPI(2)
                         socket.off()
                         // Swal.fire({
                         //     title: "Pago realizado",
@@ -78,6 +79,7 @@ export default function Pasarela(param) {
                         // })
                     } else {
                         console.log('error')
+                        setRtaAPI(3)
                         socket.off()
                         // Swal.fire({
                         //     title: "Error",
@@ -367,7 +369,7 @@ export default function Pasarela(param) {
             <Boton1 />
             {/* {rtaAPI.message} */}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
-                {xqr1 === "" && !rtaAPI ?
+                {xqr1 === "" ?
                     <DialogContent>
                         <DialogContentText align='center'>
                             <Typography variant="h5" component="h2">
@@ -386,7 +388,7 @@ export default function Pasarela(param) {
                             qr: false
                         }} />
                     </DialogContent>
-                    : xqr1 !== "" && rtaAPI ?
+                    : xqr1 !== "" ?
                         <DialogContent>
                             <Iframe url={xqr1}
                                 width="100%"
