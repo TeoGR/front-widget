@@ -28,7 +28,6 @@ const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com"
 
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
-    const [open1, setOpen1] = React.useState(false);
     const [este_dispositivo, setEste_dispositivo] = React.useState();
 
     const [xqr1, setXqr1] = React.useState("");
@@ -60,12 +59,13 @@ export default function Pasarela(param) {
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
+                setOpen(false)
+                handleClose()
                 if (Object.keys(msj).length > 0) {
                     console.log('obj: ', Object.keys(msj))
-                    console.log('dentro- open: ', open, 'open1: ', open1)
-
+                    console.log('dentro- open: ', open)
                     setOpen(false)
-                    setOpen1(false)
+                    handleClose()
                     if (msj.message === 'Multicash procesado') {
                         Swal.fire({
                             title: "Pago realizado",
@@ -87,11 +87,12 @@ export default function Pasarela(param) {
                     }
                 }
                 setOpen(false)
-                setOpen1(false)
                 handleClose()
             })
 
             return () => {
+                setOpen(false)
+                handleClose()
                 socket.off();
             }
         }
@@ -99,13 +100,12 @@ export default function Pasarela(param) {
 
     function crack(data) {
         console.log('3obj:', data);
-        console.log('open: ', open, 'open1: ', open1)
+        console.log('open: ', open)
         if (Object.keys(data).length > 0) {
             console.log('obj: ', Object.keys(data))
-            console.log('dentro- open: ', open, 'open1: ', open1)
+            console.log('dentro- open: ', open)
 
             setOpen(false)
-            setOpen1(false)
             if (data.message === 'Multicash procesado') {
                 Swal.fire({
                     title: "Pago realizado",
@@ -134,7 +134,6 @@ export default function Pasarela(param) {
     //         console.log('obj: ', Object.keys(rtaAPI))
     //         setRtaAPI({})
     //         setOpen(false)
-    //         setOpen1(false)
     //         if (rtaAPI.message === 'Multicash procesado') {
     //             Swal.fire({
     //                 title: "Pago realizado",
@@ -218,7 +217,6 @@ export default function Pasarela(param) {
                 console.log(refer);
                 if (refer.Link !== '') {
                     setXqr1(refer.Link);
-                    setOpen1(true)
                 }
             })
             .catch(error => console.log('error', error));
@@ -227,7 +225,6 @@ export default function Pasarela(param) {
 
     const handleClose = () => {
         setOpen(false);
-        setOpen1(false)
     };
 
     const Carta = (record) => {
@@ -309,7 +306,7 @@ export default function Pasarela(param) {
             <input type="text" onChange={(e) => name(e)} />
             <Boton1 />
             {rtaAPI.message}
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title"  >
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
                 {xqr1 === "" ?
                     <DialogContent>
                         <DialogContentText align='center'>
