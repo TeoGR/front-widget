@@ -310,32 +310,43 @@ export default function Pasarela(param) {
             <Boton1 />
             {rtaAPI.message}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title"  >
-                <DialogContent>
-                    <DialogContentText align='center'>
-                        <Typography variant="h5" component="h2">
-                            Confirmar inicio del proceso de pago
-                        </Typography>
-                        Daremos inicio al proceso de pago con los siguientes datos, por favor confirme si son correctos:
-                    </DialogContentText>
+                {xqr1 === "" ?
+                    <DialogContent>
+                        <DialogContentText align='center'>
+                            <Typography variant="h5" component="h2">
+                                Confirmar inicio del proceso de pago
+                            </Typography>
+                            Daremos inicio al proceso de pago con los siguientes datos, por favor confirme si son correctos:
+                        </DialogContentText>
 
-                    <Carta record={{
-                        titulo: "Datos de la compra",
-                        nombreComprador: dataPago.nombre,
-                        emailComprador: dataPago.correo,
-                        importeTotal: dataPago.importetotal,
-                        numeroReferencia: dataPago.numeroreferencia,
-                        campo: "imagenes",
-                        qr: false
-                    }} />
-                </DialogContent>
+                        <Carta record={{
+                            titulo: "Datos de la compra",
+                            nombreComprador: dataPago.nombre,
+                            emailComprador: dataPago.correo,
+                            importeTotal: dataPago.importetotal,
+                            numeroReferencia: dataPago.numeroreferencia,
+                            campo: "imagenes",
+                            qr: false
+                        }} />
+                    </DialogContent>
+                    :
+                    <DialogContent>
+                        <Iframe url={xqr1}
+                            width="100%"
+                            height="550px"
+                            id="myId"
+                            styles={{ background: "#856767", border: "none" }}
+                            position="relative" />
+                    </DialogContent>
+                }
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        Cancelar
+                        {xqr1 === "" ? 'Cancelar' : 'Salir'}
                     </Button>
                 </DialogActions>
             </Dialog>
 
-            <Dialog open={open1} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
+            {/* <Dialog open={open1} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
                 <DialogTitle id="form-dialog-title">Pasarela de pago</DialogTitle>
                 <DialogContent>
                     <Iframe url={xqr1}
@@ -350,7 +361,7 @@ export default function Pasarela(param) {
                         Salir
                     </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> */}
         </div>
     );
 }
