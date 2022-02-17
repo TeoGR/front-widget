@@ -67,7 +67,9 @@ export default function Pasarela(param) {
                     handleClose()
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
+                        console.log('1', rtaAPI)
                         setRtaAPI({})
+                        console.log('2', rtaAPI)
                         socket.off()
                         // Swal.fire({
                         //     title: "Pago realizado",
