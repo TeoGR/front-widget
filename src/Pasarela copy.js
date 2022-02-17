@@ -47,6 +47,10 @@ export default function Pasarela(param) {
 
     //#region configuracion del socket
     const [rtaAPI, setRtaAPI] = useState({});
+    function useForceUpdate(data) {
+        return () => setRtaAPI(rtaAPI => data); // update the state to force render
+    }
+    const forceUpdate = useForceUpdate(rtaAPI);
 
     console.log('1obj:', rtaAPI);
     useEffect(() => {
@@ -59,6 +63,7 @@ export default function Pasarela(param) {
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
+                forceUpdate(msj)
                 setOpen(false)
                 handleClose()
                 if (Object.keys(msj).length > 0) {
