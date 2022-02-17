@@ -97,14 +97,10 @@ export default function Pasarela(param) {
                 setOpen(false)
                 handleClose()
             })
-
-            socket.on("closeModal_" + dataPago.numeroreferencia, msj => {
-                console.log('sockect cierre modal ', msj)
-                setOpen(false)
-                handleClose()
-            })
+            clearInterval(asd)
             //socket.off();
         }
+        clearInterval(asd)
     }, 10000);
 
 
