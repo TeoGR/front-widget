@@ -28,6 +28,7 @@ const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com"
 
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
+    const [openFinal, setOpenFinal] = React.useState(false);
     const [este_dispositivo, setEste_dispositivo] = React.useState();
 
     const [xqr1, setXqr1] = React.useState("");
@@ -287,6 +288,11 @@ export default function Pasarela(param) {
         setOpen(false);
     };
 
+    const test = async () => {
+        setOpenFinal(false)
+        clearInterval(asd)
+    };
+
     const Carta = (record) => {
         return (
             <Card align='center'>
@@ -403,6 +409,27 @@ export default function Pasarela(param) {
                     </Button>
                 </DialogActions>
             </Dialog>
+            {
+                rtaAPI === 2 ?
+                    <Dialog open={true} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
+
+                        <DialogContent>
+                            <DialogContentText align='center'>
+                                <Typography variant="h5" component="h2">
+                                    Pago exitoso
+                                </Typography>
+                            </DialogContentText>
+
+
+                        </DialogContent>
+
+                        <DialogActions>
+                            <Button onClick={test} color="primary">
+                                Salir
+                            </Button>
+                        </DialogActions>
+                    </Dialog> : null
+            }
 
             {/* <Dialog open={open1} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
                 <DialogTitle id="form-dialog-title">Pasarela de pago</DialogTitle>
