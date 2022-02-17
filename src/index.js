@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Pasarela from './Pasarela copy';
+import Pasarela from './Pasarela';
 
 const aaaaa = document.getElementById("widgetPasarela");
 

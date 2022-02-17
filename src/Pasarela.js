@@ -65,7 +65,7 @@ export default function Pasarela(param) {
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(msj)
-                setOpen1(0)
+                setOpen1(5)
             })
 
             setFlagCanal(false)
@@ -81,7 +81,7 @@ export default function Pasarela(param) {
             console.log('obj: ', Object.keys(rtaAPI))
             setRtaAPI({})
             setOpen(false)
-            setOpen1(false)
+            setOpen1(5)
             if (rtaAPI.message === 'Multicash procesado') {
                 Swal.fire({
                     title: "Pago realizado",
@@ -411,6 +411,24 @@ export default function Pasarela(param) {
                                 id="myId"
                                 styles={{ background: "#856767", border: "none" }}
                                 position="relative" />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                                Salir
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            );
+        case 5:
+            console.log('entro al switch 4')
+            return (
+                <div>
+                    <Boton1 />
+                    <Dialog open={open1} disableBackdropClick onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
+                        <DialogTitle id="form-dialog-title">Pasarela de pago</DialogTitle>
+                        <DialogContent>
+                            <p>Pago ok</p>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose} color="primary">
