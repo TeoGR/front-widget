@@ -50,7 +50,7 @@ export default function Pasarela(param) {
 
     console.log('1obj:', rtaAPI);
 
-    setInterval(() => {
+    const asd = setInterval(() => {
         console.log('entro al timeout')
         if (rtaAPI === 0) {
             console.log('abri canal')
@@ -69,6 +69,7 @@ export default function Pasarela(param) {
                         console.log('ok')
                         setRtaAPI(2)
                         socket.off()
+                        clearInterval(asd)
                         // Swal.fire({
                         //     title: "Pago realizado",
                         //     text: "El multicash se proceso con exito",
@@ -81,6 +82,8 @@ export default function Pasarela(param) {
                         console.log('error')
                         setRtaAPI(3)
                         socket.off()
+                        clearInterval(asd)
+
                         // Swal.fire({
                         //     title: "Error",
                         //     text: "Error al procesar el pago",
