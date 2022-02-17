@@ -335,10 +335,11 @@ export default function Pasarela(param) {
                                 styles={{ background: "#856767", border: "none" }}
                                 position="relative" />
                         </DialogContent>
-                        :
-                        <DialogContent>
-                            <p>pago exitoso</p>
-                        </DialogContent>
+                        : Object.keys(rtaAPI).length > 0 ?
+                            <DialogContent>
+                                <p>pago exitoso</p>
+                            </DialogContent>
+                            : null
                 }
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
