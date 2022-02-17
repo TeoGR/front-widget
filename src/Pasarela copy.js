@@ -96,11 +96,10 @@ export default function Pasarela(param) {
                 }
                 setOpen(false)
                 handleClose()
+                clearInterval(asd)
             })
-            clearInterval(asd)
             //socket.off();
         }
-        clearInterval(asd)
     }, 10000);
 
 
