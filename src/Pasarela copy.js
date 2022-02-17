@@ -67,6 +67,8 @@ export default function Pasarela(param) {
                     handleClose()
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
+                        setRtaAPI({})
+                        socket.off()
                         // Swal.fire({
                         //     title: "Pago realizado",
                         //     text: "El multicash se proceso con exito",
@@ -77,6 +79,8 @@ export default function Pasarela(param) {
                         // })
                     } else {
                         console.log('error')
+                        setRtaAPI({})
+                        socket.off()
                         // Swal.fire({
                         //     title: "Error",
                         //     text: "Error al procesar el pago",
