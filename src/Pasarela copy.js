@@ -46,18 +46,18 @@ export default function Pasarela(param) {
     console.log('dataPago: ', dataPago);
 
     //#region configuracion del socket
-    const [rtaAPI, setRtaAPI] = useState({});
+    const [rtaAPI, setRtaAPI] = useState(false);
 
     console.log('1obj:', rtaAPI);
 
     setInterval(() => {
         console.log('entro al timeout')
-        if (Object.keys(rtaAPI).length === 0) {
+        if (!rtaAPI) {
             console.log('abri canal')
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
-                setRtaAPI(msj)
+                setRtaAPI(true)
                 setOpen(false)
                 handleClose()
                 if (Object.keys(msj).length > 0) {
@@ -67,9 +67,6 @@ export default function Pasarela(param) {
                     handleClose()
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
-                        console.log('1', rtaAPI)
-                        setRtaAPI({})
-                        console.log('2', rtaAPI)
                         socket.off()
                         // Swal.fire({
                         //     title: "Pago realizado",
@@ -81,7 +78,6 @@ export default function Pasarela(param) {
                         // })
                     } else {
                         console.log('error')
-                        setRtaAPI({})
                         socket.off()
                         // Swal.fire({
                         //     title: "Error",
@@ -369,9 +365,9 @@ export default function Pasarela(param) {
             <label>Numero referencia</label>
             <input type="text" onChange={(e) => name(e)} />
             <Boton1 />
-            {rtaAPI.message}
+            {/* {rtaAPI.message} */}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
-                {xqr1 === "" && Object.keys(rtaAPI).length === 0 ?
+                {xqr1 === "" && !rtaAPI ?
                     <DialogContent>
                         <DialogContentText align='center'>
                             <Typography variant="h5" component="h2">
@@ -390,7 +386,7 @@ export default function Pasarela(param) {
                             qr: false
                         }} />
                     </DialogContent>
-                    : xqr1 !== "" && Object.keys(rtaAPI).length === 0 ?
+                    : xqr1 !== "" && rtaAPI ?
                         <DialogContent>
                             <Iframe url={xqr1}
                                 width="100%"
@@ -399,11 +395,7 @@ export default function Pasarela(param) {
                                 styles={{ background: "#856767", border: "none" }}
                                 position="relative" />
                         </DialogContent>
-                        : Object.keys(rtaAPI).length > 0 ?
-                            <DialogContent>
-                                <p>pago exitoso</p>
-                            </DialogContent>
-                            : null
+                        : null
                 }
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
