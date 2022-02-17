@@ -229,7 +229,7 @@ export default function Pasarela(param) {
 
     };
 
-    const handleClose = () => {
+    const handleClose = async () => {
         setOpen(false);
     };
 
