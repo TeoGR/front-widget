@@ -90,11 +90,11 @@ export default function Pasarela(param) {
                 handleClose()
             })
 
-            return () => {
-                setOpen(false)
-                handleClose()
-                socket.off();
-            }
+            // return () => {
+            //     setOpen(false)
+            //     handleClose()
+            //     socket.off();
+            // }
         }
     })
 
