@@ -50,7 +50,7 @@ export default function Pasarela(param) {
 
     console.log('1obj:', rtaAPI);
 
-    setTimeout(() => {
+    setInterval(() => {
         console.log('entro al timeout')
         const socket = io(ENDPOINT, { transports: ['websocket'] })
         if (Object.keys(rtaAPI).length === 0) {
