@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useReducer } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -51,7 +51,12 @@ export default function Pasarela(param) {
     // console.log('1obj:', rtaAPI);
 
 
+    function useForceUpdate(val) {
+        //const [value, setValue] = useState(0); // integer state
+        return () => setRtaAPI(value => value + val); // update the state to force render
+    }
 
+    const forceUpdate = useForceUpdate();
 
     const interval = setInterval(() => {
         console.log('entro al setInterval')
@@ -60,20 +65,23 @@ export default function Pasarela(param) {
             console.log('creamos canal')
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('abrio canal ', msj, Object.keys(msj))
-                setRtaAPI((prev) => 1)
+                //setRtaAPI((prev) => 1)
+                forceUpdate(1)
                 console.log('antes del if: ', rtaAPI)
 
                 if (Object.keys(msj).length > 0) {
                     console.log('entro al if del msj: ', rtaAPI)
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
-                        setRtaAPI((prev) => 2)
+                        //setRtaAPI((prev) => 2)
+                        forceUpdate(1)
                         console.log('valor rtaApi: ', rtaAPI)
                         socket.off()
                         clearInterval(interval)
                     } else {
                         console.log('error')
-                        setRtaAPI((prev) => 3)
+                        //setRtaAPI((prev) => 3)
+                        forceUpdate(2)
                         console.log('valor rtaApi: ', rtaAPI)
                         socket.off()
                         clearInterval(interval)
