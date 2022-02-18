@@ -26,6 +26,13 @@ import Swal from 'sweetalert2'
 import { io } from "socket.io-client";
 const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com";
 
+let valAux = 0;
+
+function useForceUpdate(val) {
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + val); // update the state to force render
+}
+
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
     const [este_dispositivo, setEste_dispositivo] = React.useState();
@@ -36,7 +43,6 @@ export default function Pasarela(param) {
     // console.log('esto recibio el widget', param);
     // console.log('esto recibio el widget', param.param);
     var dataPago;
-
     var data = param.param !== undefined ? param.param : param;
     // console.log('data limpio:', data);
 
@@ -51,12 +57,9 @@ export default function Pasarela(param) {
     // console.log('1obj:', rtaAPI);
 
 
-    function useForceUpdate(val) {
-        //const [value, setValue] = useState(0); // integer state
-        return () => setRtaAPI(value => value + val); // update the state to force render
-    }
 
-    const forceUpdate = useForceUpdate();
+
+    let forceUpdate = useForceUpdate(valAux);
 
     const interval = setInterval(() => {
         console.log('entro al setInterval')
@@ -67,22 +70,22 @@ export default function Pasarela(param) {
                 console.log('abrio canal ', msj, Object.keys(msj))
                 //setRtaAPI((prev) => 1)
                 forceUpdate(1)
-                console.log('antes del if: ', rtaAPI)
+                console.log('antes del if: ', forceUpdate)
 
                 if (Object.keys(msj).length > 0) {
-                    console.log('entro al if del msj: ', rtaAPI)
+                    console.log('entro al if del msj: ', forceUpdate)
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
                         //setRtaAPI((prev) => 2)
                         forceUpdate(1)
-                        console.log('valor rtaApi: ', rtaAPI)
+                        console.log('valor rtaApi: ', forceUpdate)
                         socket.off()
                         clearInterval(interval)
                     } else {
                         console.log('error')
                         //setRtaAPI((prev) => 3)
                         forceUpdate(2)
-                        console.log('valor rtaApi: ', rtaAPI)
+                        console.log('valor rtaApi: ', forceUpdate)
                         socket.off()
                         clearInterval(interval)
                     }
