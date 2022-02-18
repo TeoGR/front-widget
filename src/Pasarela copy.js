@@ -51,6 +51,15 @@ export default function Pasarela(param) {
 
     console.log('1obj:', rtaAPI);
 
+    useEffect(() => {
+        if (rtaAPI === 2 || rtaAPI === 3) {
+            return () => {
+                clearInterval(asd)
+            }
+        }
+    }, [rtaAPI])
+
+
     const asd = setInterval(() => {
         console.log('entro al timeout')
         if (rtaAPI === 0) {
