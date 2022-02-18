@@ -26,49 +26,43 @@ import Swal from 'sweetalert2'
 import { io } from "socket.io-client";
 const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com";
 
-
-let interval;
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
     const [este_dispositivo, setEste_dispositivo] = React.useState();
 
     const [xqr1, setXqr1] = React.useState("");
-    const [contador, setContador] = React.useState(0);
 
     //leemos y asignamos las variables
-    console.log('esto recibio el widget', param);
-    console.log('esto recibio el widget', param.param);
+    // console.log('esto recibio el widget', param);
+    // console.log('esto recibio el widget', param.param);
     var dataPago;
 
     var data = param.param !== undefined ? param.param : param;
-    console.log('data limpio:', data);
+    // console.log('data limpio:', data);
 
     if (data.data_pago) {
         dataPago = eval(data.data_pago);
     }
-    console.log('dataPago: ', dataPago);
+    // console.log('dataPago: ', dataPago);
 
     //#region configuracion del socket
     const [rtaAPI, setRtaAPI] = useState(0);
 
-    console.log('1obj:', rtaAPI);
+    // console.log('1obj:', rtaAPI);
 
-    useEffect(() => {
-        console.log('entro al useEffect: ', contador)
+
+
+
+    const interval = setInterval(() => {
+        console.log('entro al setInterval')
         if (rtaAPI === 0) {
-            console.log('abrimos canal')
             const socket = io(ENDPOINT, { transports: ['websocket'] })
+            console.log('creamos canal')
             socket.on(dataPago.numeroreferencia, msj => {
-                console.log('abrio canal ', msj)
-                console.log('esto llego ', msj)
+                console.log('abrio canal ', msj, Object.keys(msj))
                 setRtaAPI(1)
-                // setOpen(false)
-                // handleClose()
                 if (Object.keys(msj).length > 0) {
-                    console.log('obj: ', Object.keys(msj))
-                    console.log('dentro- open: ', open)
-                    // setOpen(false)
-                    // handleClose()
+                    console.log('entro al if del msj: ', rtaAPI)
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
                         setRtaAPI(2)
@@ -81,24 +75,12 @@ export default function Pasarela(param) {
                         clearInterval(interval)
                     }
                 }
-                // setOpen(false)
-                // handleClose()
                 socket.off()
                 clearInterval(interval)
             })
         } else {
             clearInterval(interval)
         }
-
-        return () => {
-
-        }
-    }, [contador])
-
-
-    interval = setInterval(() => {
-        console.log('entro al timeout')
-        setContador((prev) => prev + 1)
     }, 30000);
 
 
@@ -153,36 +135,6 @@ export default function Pasarela(param) {
     //         // }
     //     }
     // })
-
-    function crack(data) {
-        console.log('3obj:', data);
-        console.log('open: ', open)
-        if (Object.keys(data).length > 0) {
-            console.log('obj: ', Object.keys(data))
-            console.log('dentro- open: ', open)
-
-            //setOpen(false)
-            if (data.message === 'Multicash procesado') {
-                Swal.fire({
-                    title: "Pago realizado",
-                    text: "El multicash se proceso con exito",
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#5CB85C',
-                    reverseButtons: true
-                })
-            } else {
-                Swal.fire({
-                    title: "Error",
-                    text: "Error al procesar el pago",
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#D33',
-                    reverseButtons: true
-                })
-            }
-        }
-    }
 
     // useEffect(() => {
     //     console.log('3obj:', rtaAPI);
