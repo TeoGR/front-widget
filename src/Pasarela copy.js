@@ -74,35 +74,17 @@ export default function Pasarela(param) {
                         setOpenFinal(true)
                         socket.off()
                         clearInterval(interval)
-                        // Swal.fire({
-                        //     title: "Pago realizado",
-                        //     text: "El multicash se proceso con exito",
-                        //     icon: 'success',
-                        //     confirmButtonText: 'Aceptar',
-                        //     confirmButtonColor: '#5CB85C',
-                        //     reverseButtons: true
-                        // })
                     } else {
                         console.log('error')
                         setRtaAPI(3)
                         socket.off()
                         clearInterval(interval)
-
-                        // Swal.fire({
-                        //     title: "Error",
-                        //     text: "Error al procesar el pago",
-                        //     icon: 'error',
-                        //     confirmButtonText: 'Aceptar',
-                        //     confirmButtonColor: '#D33',
-                        //     reverseButtons: true
-                        // })
                     }
                 }
                 setOpen(false)
                 handleClose()
                 clearInterval(interval)
             })
-            //socket.off();
         } else {
             clearInterval(interval)
         }
@@ -111,7 +93,6 @@ export default function Pasarela(param) {
 
     // useEffect(() => {
     //     console.log('2obj:', rtaAPI);
-
     //     console.log('numero ref: ', dataPago.numeroreferencia)
     //     if (Object.keys(rtaAPI).length === 0) {
     //         console.log('abri canal')
@@ -149,13 +130,11 @@ export default function Pasarela(param) {
     //             setOpen(false)
     //             handleClose()
     //         })
-
     //         socket.on("closeModal_" + dataPago.numeroreferencia, msj => {
     //             console.log('sockect cierre modal ', msj)
     //             setOpen(false)
     //             handleClose()
     //         })
-
     //         // return () => {
     //         //     setOpen(false)
     //         //     handleClose()
@@ -378,7 +357,7 @@ export default function Pasarela(param) {
             <Boton1 />
             {/* {rtaAPI.message} */}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
-                {xqr1 === "" ?
+                {xqr1 === "" && (rtaAPI !== 2 || rtaAPI !== 3) ?
                     <DialogContent>
                         <DialogContentText align='center'>
                             <Typography variant="h5" component="h2">
@@ -397,7 +376,7 @@ export default function Pasarela(param) {
                             qr: false
                         }} />
                     </DialogContent>
-                    : xqr1 !== "" ?
+                    : xqr1 !== "" && (rtaAPI !== 2 || rtaAPI !== 3) ?
                         <DialogContent>
                             <Iframe url={xqr1}
                                 width="100%"
@@ -406,7 +385,19 @@ export default function Pasarela(param) {
                                 styles={{ background: "#856767", border: "none" }}
                                 position="relative" />
                         </DialogContent>
-                        : null
+                        : rtaAPI === 2 ?
+                            <DialogContent>
+                                <Typography variant="h5" component="h2">
+                                    Pago exitoso
+                                </Typography>
+                            </DialogContent>
+                            : rtaAPI === 3 ?
+                                <DialogContent>
+                                    <Typography variant="h5" component="h2">
+                                        Pago fallido
+                                    </Typography>
+                                </DialogContent>
+                                : null
                 }
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
@@ -414,27 +405,6 @@ export default function Pasarela(param) {
                     </Button>
                 </DialogActions>
             </Dialog>
-            {
-                rtaAPI === 2 ?
-                    <Dialog open={openFinal} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
-
-                        <DialogContent>
-                            <DialogContentText align='center'>
-                                <Typography variant="h5" component="h2">
-                                    Pago exitoso
-                                </Typography>
-                            </DialogContentText>
-
-
-                        </DialogContent>
-
-                        <DialogActions>
-                            <Button onClick={test} color="primary">
-                                Salir
-                            </Button>
-                        </DialogActions>
-                    </Dialog> : null
-            }
 
             {/* <Dialog open={open1} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
                 <DialogTitle id="form-dialog-title">Pasarela de pago</DialogTitle>
