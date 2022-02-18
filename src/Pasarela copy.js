@@ -455,7 +455,7 @@ export default function Pasarela(param) {
 
     const intervalo = setInterval(() => {
         console.log('entro al timeout')
-        if (rtaAPI === 0) {
+        if (rtaAPI === 0 && xqr1 !== "") {
             console.log('abri canal')
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
