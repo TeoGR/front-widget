@@ -33,6 +33,7 @@ export default function Pasarela(param) {
     const [este_dispositivo, setEste_dispositivo] = React.useState();
 
     const [xqr1, setXqr1] = React.useState("");
+    const [contador, setContador] = React.useState(0);
 
     //leemos y asignamos las variables
     console.log('esto recibio el widget', param);
@@ -52,12 +53,13 @@ export default function Pasarela(param) {
 
     console.log('1obj:', rtaAPI);
 
-    interval = setInterval(() => {
-        console.log('entro al timeout')
+    useEffect(() => {
+        console.log('entro al useEffect: ', contador)
         if (rtaAPI === 0) {
-            console.log('abri canal')
+            console.log('abrimos canal')
             const socket = io(ENDPOINT, { transports: ['websocket'] })
             socket.on(dataPago.numeroreferencia, msj => {
+                console.log('abrio canal ', msj)
                 console.log('esto llego ', msj)
                 setRtaAPI(1)
                 // setOpen(false)
@@ -81,11 +83,22 @@ export default function Pasarela(param) {
                 }
                 // setOpen(false)
                 // handleClose()
+                socket.off()
                 clearInterval(interval)
             })
         } else {
             clearInterval(interval)
         }
+
+        return () => {
+
+        }
+    }, [contador])
+
+
+    interval = setInterval(() => {
+        console.log('entro al timeout')
+        setContador((prev) => prev + 1)
     }, 15000);
 
 
@@ -148,7 +161,7 @@ export default function Pasarela(param) {
             console.log('obj: ', Object.keys(data))
             console.log('dentro- open: ', open)
 
-            setOpen(false)
+            //setOpen(false)
             if (data.message === 'Multicash procesado') {
                 Swal.fire({
                     title: "Pago realizado",
@@ -379,13 +392,13 @@ export default function Pasarela(param) {
                                 styles={{ background: "#856767", border: "none" }}
                                 position="relative" />
                         </DialogContent>
-                        : rtaAPI === 2 ?
+                        : xqr1 !== "" && rtaAPI === 2 ?
                             <DialogContent>
                                 <Typography variant="h5" component="h2">
                                     Pago exitoso
                                 </Typography>
                             </DialogContent>
-                            : rtaAPI === 3 ?
+                            : xqr1 !== "" && rtaAPI === 3 ?
                                 <DialogContent>
                                     <Typography variant="h5" component="h2">
                                         Pago fallido
