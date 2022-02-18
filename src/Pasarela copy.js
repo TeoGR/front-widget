@@ -499,6 +499,9 @@ export default function Pasarela(param) {
                         //     reverseButtons: true
                         // })
                     }
+                    socket.off()
+                    socket.disconnect()
+                    clearInterval(asd)
                 }
                 // setOpen(false)
                 // handleClose()
