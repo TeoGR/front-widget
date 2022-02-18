@@ -99,7 +99,7 @@ export default function Pasarela(param) {
     interval = setInterval(() => {
         console.log('entro al timeout')
         setContador((prev) => prev + 1)
-    }, 15000);
+    }, 30000);
 
 
     // useEffect(() => {
