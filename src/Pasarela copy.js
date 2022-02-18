@@ -30,7 +30,6 @@ const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com"
 let interval;
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
-    const [openFinal, setOpenFinal] = React.useState(false);
     const [este_dispositivo, setEste_dispositivo] = React.useState();
 
     const [xqr1, setXqr1] = React.useState("");
@@ -61,17 +60,16 @@ export default function Pasarela(param) {
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('esto llego ', msj)
                 setRtaAPI(1)
-                setOpen(false)
-                handleClose()
+                // setOpen(false)
+                // handleClose()
                 if (Object.keys(msj).length > 0) {
                     console.log('obj: ', Object.keys(msj))
                     console.log('dentro- open: ', open)
-                    setOpen(false)
-                    handleClose()
+                    // setOpen(false)
+                    // handleClose()
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
                         setRtaAPI(2)
-                        setOpenFinal(true)
                         socket.off()
                         clearInterval(interval)
                     } else {
@@ -81,14 +79,14 @@ export default function Pasarela(param) {
                         clearInterval(interval)
                     }
                 }
-                setOpen(false)
-                handleClose()
+                // setOpen(false)
+                // handleClose()
                 clearInterval(interval)
             })
         } else {
             clearInterval(interval)
         }
-    }, 10000);
+    }, 15000);
 
 
     // useEffect(() => {
@@ -270,10 +268,6 @@ export default function Pasarela(param) {
 
     const handleClose = async () => {
         setOpen(false);
-    };
-
-    const test = async () => {
-        setOpenFinal(false)
         clearInterval(interval)
     };
 
@@ -406,22 +400,7 @@ export default function Pasarela(param) {
                 </DialogActions>
             </Dialog>
 
-            {/* <Dialog open={open1} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"}>
-                <DialogTitle id="form-dialog-title">Pasarela de pago</DialogTitle>
-                <DialogContent>
-                    <Iframe url={xqr1}
-                        width="100%"
-                        height="550px"
-                        id="myId"
-                        styles={{ background: "#856767", border: "none" }}
-                        position="relative" />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Salir
-                    </Button>
-                </DialogActions>
-            </Dialog> */}
+
         </div>
     );
 }
