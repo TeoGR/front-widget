@@ -686,7 +686,7 @@ export default function Pasarela(param) {
                             qr: false
                         }} />
                     </DialogContent>
-                    : xqr1 !== "" && (rtaAPI !== 2 && rtaAPI !== 0) ?
+                    : xqr1 !== "" && (rtaAPI !== 2) ?
                         <DialogContent>
                             <Iframe url={xqr1}
                                 width="100%"
