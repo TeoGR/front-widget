@@ -436,22 +436,22 @@ export default function Pasarela(param) {
     const [xqr1, setXqr1] = React.useState("");
 
     //leemos y asignamos las variables
-    console.log('esto recibio el widget', param);
-    console.log('esto recibio el widget', param.param);
+    //console.log('esto recibio el widget', param);
+    //console.log('esto recibio el widget', param.param);
     var dataPago;
 
     var data = param.param !== undefined ? param.param : param;
-    console.log('data limpio:', data);
+    //console.log('data limpio:', data);
 
     if (data.data_pago) {
         dataPago = eval(data.data_pago);
     }
-    console.log('dataPago: ', dataPago);
+    //console.log('dataPago: ', dataPago);
 
     //#region configuracion del socket
     const [rtaAPI, setRtaAPI] = useState(0);
 
-    console.log('1obj:', rtaAPI);
+    //console.log('1obj:', rtaAPI);
 
     const intervalo = setInterval(() => {
         console.log('entro al timeout')
@@ -530,7 +530,7 @@ export default function Pasarela(param) {
 
     let vconf = param_configura;
     var vdatos_config = vconf.split("|");
-    console.log(vdatos_config);
+    //console.log(vdatos_config);
     //vdatos[0] - tipo
     //vdatos[1] - identificacion
     //vdatos[2] - enrola si
@@ -659,6 +659,8 @@ export default function Pasarela(param) {
         dataPago.numeroreferencia = e.target.value;
         dataPago.numeroreferenciaorigen = e.target.value;
     }
+
+    console.log('pille: ', xqr1, rtaAPI)
 
     return (
         <div>
