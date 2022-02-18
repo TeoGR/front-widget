@@ -60,17 +60,21 @@ export default function Pasarela(param) {
             console.log('creamos canal')
             socket.on(dataPago.numeroreferencia, msj => {
                 console.log('abrio canal ', msj, Object.keys(msj))
-                setRtaAPI(1)
+                setRtaAPI((prev) => 1)
+                console.log('antes del if: ', rtaAPI)
+
                 if (Object.keys(msj).length > 0) {
                     console.log('entro al if del msj: ', rtaAPI)
                     if (msj.message === 'Multicash procesado') {
                         console.log('ok')
-                        setRtaAPI(2)
+                        setRtaAPI((prev) => 2)
+                        console.log('valor rtaApi: ', rtaAPI)
                         socket.off()
                         clearInterval(interval)
                     } else {
                         console.log('error')
-                        setRtaAPI(3)
+                        setRtaAPI((prev) => 3)
+                        console.log('valor rtaApi: ', rtaAPI)
                         socket.off()
                         clearInterval(interval)
                     }
