@@ -26,6 +26,8 @@ import Swal from 'sweetalert2'
 import { io } from "socket.io-client";
 const ENDPOINT = /*"localhost:3100";*/"https://server-node-widget.herokuapp.com";
 
+
+let interval;
 export default function Pasarela(param) {
     const [open, setOpen] = React.useState(false);
     const [openFinal, setOpenFinal] = React.useState(false);
@@ -51,16 +53,7 @@ export default function Pasarela(param) {
 
     console.log('1obj:', rtaAPI);
 
-    useEffect(() => {
-        if (rtaAPI === 2 || rtaAPI === 3) {
-            return () => {
-                clearInterval(asd)
-            }
-        }
-    }, [rtaAPI])
-
-
-    const asd = setInterval(() => {
+    interval = setInterval(() => {
         console.log('entro al timeout')
         if (rtaAPI === 0) {
             console.log('abri canal')
@@ -80,7 +73,7 @@ export default function Pasarela(param) {
                         setRtaAPI(2)
                         setOpenFinal(true)
                         socket.off()
-                        clearInterval(asd)
+                        clearInterval(interval)
                         // Swal.fire({
                         //     title: "Pago realizado",
                         //     text: "El multicash se proceso con exito",
@@ -93,7 +86,7 @@ export default function Pasarela(param) {
                         console.log('error')
                         setRtaAPI(3)
                         socket.off()
-                        clearInterval(asd)
+                        clearInterval(interval)
 
                         // Swal.fire({
                         //     title: "Error",
@@ -107,11 +100,11 @@ export default function Pasarela(param) {
                 }
                 setOpen(false)
                 handleClose()
-                clearInterval(asd)
+                clearInterval(interval)
             })
             //socket.off();
         } else {
-            clearInterval(asd)
+            clearInterval(interval)
         }
     }, 10000);
 
@@ -302,7 +295,7 @@ export default function Pasarela(param) {
 
     const test = async () => {
         setOpenFinal(false)
-        clearInterval(asd)
+        clearInterval(interval)
     };
 
     const Carta = (record) => {
