@@ -453,7 +453,7 @@ export default function Pasarela(param) {
 
     console.log('1obj:', rtaAPI);
 
-    const asd = setInterval(() => {
+    const intervalo = setInterval(() => {
         console.log('entro al timeout')
         if (rtaAPI === 0) {
             console.log('abri canal')
@@ -474,7 +474,7 @@ export default function Pasarela(param) {
                         setOpenFinal(true)
                         socket.off()
                         socket.disconnect()
-                        clearInterval(asd)
+                        clearInterval(intervalo)
                         // Swal.fire({
                         //     title: "Pago realizado",
                         //     text: "El multicash se proceso con exito",
@@ -488,7 +488,7 @@ export default function Pasarela(param) {
                         setRtaAPI(3)
                         socket.off()
                         socket.disconnect()
-                        clearInterval(asd)
+                        clearInterval(intervalo)
 
                         // Swal.fire({
                         //     title: "Error",
@@ -501,133 +501,20 @@ export default function Pasarela(param) {
                     }
                     socket.off()
                     socket.disconnect()
-                    clearInterval(asd)
+                    clearInterval(intervalo)
                 }
                 // setOpen(false)
                 // handleClose()
                 socket.off()
                 socket.disconnect()
-                clearInterval(asd)
+                clearInterval(intervalo)
             })
             //socket.off();
         } else {
-            clearInterval(asd)
+            clearInterval(intervalo)
         }
     }, 10000);
 
-
-    // useEffect(() => {
-    //     console.log('2obj:', rtaAPI);
-
-    //     console.log('numero ref: ', dataPago.numeroreferencia)
-    //     if (Object.keys(rtaAPI).length === 0) {
-    //         console.log('abri canal')
-    //         const socket = io(ENDPOINT, { transports: ['websocket'] })
-    //         socket.on(dataPago.numeroreferencia, msj => {
-    //             console.log('esto llego ', msj)
-    //             setRtaAPI(msj)
-    //             setOpen(false)
-    //             handleClose()
-    //             if (Object.keys(msj).length > 0) {
-    //                 console.log('obj: ', Object.keys(msj))
-    //                 console.log('dentro- open: ', open)
-    //                 setOpen(false)
-    //                 handleClose()
-    //                 if (msj.message === 'Multicash procesado') {
-    //                     Swal.fire({
-    //                         title: "Pago realizado",
-    //                         text: "El multicash se proceso con exito",
-    //                         icon: 'success',
-    //                         confirmButtonText: 'Aceptar',
-    //                         confirmButtonColor: '#5CB85C',
-    //                         reverseButtons: true
-    //                     })
-    //                 } else {
-    //                     Swal.fire({
-    //                         title: "Error",
-    //                         text: "Error al procesar el pago",
-    //                         icon: 'error',
-    //                         confirmButtonText: 'Aceptar',
-    //                         confirmButtonColor: '#D33',
-    //                         reverseButtons: true
-    //                     })
-    //                 }
-    //             }
-    //             setOpen(false)
-    //             handleClose()
-    //         })
-
-    //         socket.on("closeModal_" + dataPago.numeroreferencia, msj => {
-    //             console.log('sockect cierre modal ', msj)
-    //             setOpen(false)
-    //             handleClose()
-    //         })
-
-    //         // return () => {
-    //         //     setOpen(false)
-    //         //     handleClose()
-    //         //     socket.off();
-    //         // }
-    //     }
-    // })
-
-    function crack(data) {
-        console.log('3obj:', data);
-        console.log('open: ', open)
-        if (Object.keys(data).length > 0) {
-            console.log('obj: ', Object.keys(data))
-            console.log('dentro- open: ', open)
-
-            setOpen(false)
-            if (data.message === 'Multicash procesado') {
-                Swal.fire({
-                    title: "Pago realizado",
-                    text: "El multicash se proceso con exito",
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#5CB85C',
-                    reverseButtons: true
-                })
-            } else {
-                Swal.fire({
-                    title: "Error",
-                    text: "Error al procesar el pago",
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#D33',
-                    reverseButtons: true
-                })
-            }
-        }
-    }
-
-    // useEffect(() => {
-    //     console.log('3obj:', rtaAPI);
-    //     if (Object.keys(rtaAPI).length > 0) {
-    //         console.log('obj: ', Object.keys(rtaAPI))
-    //         setRtaAPI({})
-    //         setOpen(false)
-    //         if (rtaAPI.message === 'Multicash procesado') {
-    //             Swal.fire({
-    //                 title: "Pago realizado",
-    //                 text: "El multicash se proceso con exito",
-    //                 icon: 'success',
-    //                 confirmButtonText: 'Aceptar',
-    //                 confirmButtonColor: '#5CB85C',
-    //                 reverseButtons: true
-    //             })
-    //         } else {
-    //             Swal.fire({
-    //                 title: "Error",
-    //                 text: "Error al procesar el pago",
-    //                 icon: 'error',
-    //                 confirmButtonText: 'Aceptar',
-    //                 confirmButtonColor: '#D33',
-    //                 reverseButtons: true
-    //             })
-    //         }
-    //     }
-    // }, [rtaAPI])
     //#endregion configuracion del socket
 
     let param_titulo = data.titulo;
@@ -700,7 +587,7 @@ export default function Pasarela(param) {
         setOpen(false);
         setXqr1("");
         setRtaAPI(0);
-        clearInterval(asd)
+        clearInterval(intervalo)
     };
 
 
@@ -750,10 +637,6 @@ export default function Pasarela(param) {
         </IconButton>
     </Tooltip>;
 
-    // React.useEffect(() => {
-    //     inicio_session(este_dispositivo)
-    // }, [este_dispositivo]);
-
     const Boton1 = () => {
         if (data.tipo_boton === 1)
             return a;
@@ -777,7 +660,6 @@ export default function Pasarela(param) {
         dataPago.numeroreferenciaorigen = e.target.value;
     }
 
-
     return (
         <div>
             <label>Numero referencia</label>
@@ -785,7 +667,7 @@ export default function Pasarela(param) {
             <Boton1 />
             {/* {rtaAPI.message} */}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} scroll={"body"} >
-                {xqr1 === "" && rtaAPI !== 2 ?
+                {xqr1 === "" && rtaAPI === 0 ?
                     <DialogContent>
                         <DialogContentText align='center'>
                             <Typography variant="h5" component="h2">
@@ -804,7 +686,7 @@ export default function Pasarela(param) {
                             qr: false
                         }} />
                     </DialogContent>
-                    : xqr1 !== "" && rtaAPI !== 2 ?
+                    : xqr1 !== "" && (rtaAPI !== 2 && rtaAPI !== 0) ?
                         <DialogContent>
                             <Iframe url={xqr1}
                                 width="100%"
@@ -820,9 +702,16 @@ export default function Pasarela(param) {
                                         Pago exitoso
                                     </Typography>
                                 </DialogContentText>
-
-
-                            </DialogContent> : null
+                            </DialogContent>
+                            : xqr1 !== "" && rtaAPI === 3 ?
+                                <DialogContent>
+                                    <DialogContentText align='center'>
+                                        <Typography variant="h5" component="h2">
+                                            No fue posible realizar el pago
+                                        </Typography>
+                                    </DialogContentText>
+                                </DialogContent>
+                                : null
                 }
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
