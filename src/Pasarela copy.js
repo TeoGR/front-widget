@@ -505,6 +505,8 @@ export default function Pasarela(param) {
                 }
                 // setOpen(false)
                 // handleClose()
+                socket.off()
+                socket.disconnect()
                 clearInterval(asd)
             })
             //socket.off();
@@ -696,13 +698,12 @@ export default function Pasarela(param) {
 
     const handleClose = async () => {
         setOpen(false);
+        setXqr1("");
+        setRtaAPI(0);
         clearInterval(asd)
     };
 
-    const test = async () => {
-        setOpenFinal(false)
-        clearInterval(asd)
-    };
+
 
     const Carta = (record) => {
         return (
