@@ -101,6 +101,8 @@ export default function Pasarela(param) {
                 clearInterval(asd)
             })
             //socket.off();
+        } else {
+            clearInterval(asd)
         }
     }, 10000);
 
