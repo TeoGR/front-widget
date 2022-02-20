@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Card, CardActions, CardContent, Typography, IconButton, MenuIcon, Tooltip } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Card, CardActions, CardContent, Typography, IconButton, Tooltip } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/HowToReg';
 import Iframe from 'react-iframe'
 import { io } from "socket.io-client";
 
